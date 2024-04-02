@@ -9,13 +9,14 @@
 /* Begin PBXBuildFile section */
 		3CA9D6582BA777B100E7A239 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9D6572BA777B100E7A239 /* AppDelegate.swift */; };
 		3CA9D65A2BA777B100E7A239 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9D6592BA777B100E7A239 /* SceneDelegate.swift */; };
-		3CA9D65C2BA777B100E7A239 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9D65B2BA777B100E7A239 /* ViewController.swift */; };
+		3CA9D65C2BA777B100E7A239 /* ImagesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9D65B2BA777B100E7A239 /* ImagesListViewController.swift */; };
 		3CA9D65F2BA777B100E7A239 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 3CA9D65E2BA777B100E7A239 /* Base */; };
 		3CA9D6612BA777B300E7A239 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3CA9D6602BA777B300E7A239 /* Assets.xcassets */; };
 		3CA9D6642BA777B300E7A239 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 3CA9D6632BA777B300E7A239 /* Base */; };
 		3CA9D66F2BA777B400E7A239 /* LentagramTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9D66E2BA777B400E7A239 /* LentagramTests.swift */; };
 		3CA9D6792BA777B400E7A239 /* LentagramUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9D6782BA777B400E7A239 /* LentagramUITests.swift */; };
 		3CA9D67B2BA777B400E7A239 /* LentagramUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9D67A2BA777B400E7A239 /* LentagramUITestsLaunchTests.swift */; };
+		3CA9D6882BA7817D00E7A239 /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9D6872BA7817D00E7A239 /* ImagesListCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +40,7 @@
 		3CA9D6542BA777B100E7A239 /* Lentagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lentagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CA9D6572BA777B100E7A239 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3CA9D6592BA777B100E7A239 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		3CA9D65B2BA777B100E7A239 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		3CA9D65B2BA777B100E7A239 /* ImagesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListViewController.swift; sourceTree = "<group>"; };
 		3CA9D65E2BA777B100E7A239 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3CA9D6602BA777B300E7A239 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3CA9D6632BA777B300E7A239 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +50,7 @@
 		3CA9D6742BA777B400E7A239 /* LentagramUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LentagramUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CA9D6782BA777B400E7A239 /* LentagramUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LentagramUITests.swift; sourceTree = "<group>"; };
 		3CA9D67A2BA777B400E7A239 /* LentagramUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LentagramUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		3CA9D6872BA7817D00E7A239 /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,9 +101,9 @@
 		3CA9D6562BA777B100E7A239 /* Lentagram */ = {
 			isa = PBXGroup;
 			children = (
+				3CA9D6892BA781A300E7A239 /* ImagesList */,
 				3CA9D6572BA777B100E7A239 /* AppDelegate.swift */,
 				3CA9D6592BA777B100E7A239 /* SceneDelegate.swift */,
-				3CA9D65B2BA777B100E7A239 /* ViewController.swift */,
 				3CA9D65D2BA777B100E7A239 /* Main.storyboard */,
 				3CA9D6602BA777B300E7A239 /* Assets.xcassets */,
 				3CA9D6622BA777B300E7A239 /* LaunchScreen.storyboard */,
@@ -125,6 +127,15 @@
 				3CA9D67A2BA777B400E7A239 /* LentagramUITestsLaunchTests.swift */,
 			);
 			path = LentagramUITests;
+			sourceTree = "<group>";
+		};
+		3CA9D6892BA781A300E7A239 /* ImagesList */ = {
+			isa = PBXGroup;
+			children = (
+				3CA9D65B2BA777B100E7A239 /* ImagesListViewController.swift */,
+				3CA9D6872BA7817D00E7A239 /* ImagesListCell.swift */,
+			);
+			path = ImagesList;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,7 +269,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3CA9D65C2BA777B100E7A239 /* ViewController.swift in Sources */,
+				3CA9D65C2BA777B100E7A239 /* ImagesListViewController.swift in Sources */,
+				3CA9D6882BA7817D00E7A239 /* ImagesListCell.swift in Sources */,
 				3CA9D6582BA777B100E7A239 /* AppDelegate.swift in Sources */,
 				3CA9D65A2BA777B100E7A239 /* SceneDelegate.swift in Sources */,
 			);
