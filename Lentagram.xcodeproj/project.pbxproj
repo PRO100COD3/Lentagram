@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C565AD62BE1689C001A731D /* SF-Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3C565AD52BE1689C001A731D /* SF-Pro.ttf */; };
+		3C632E692BBE9285001B2641 /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C632E682BBE9285001B2641 /* SingleImageViewController.swift */; };
 		3CA9D6582BA777B100E7A239 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9D6572BA777B100E7A239 /* AppDelegate.swift */; };
 		3CA9D65A2BA777B100E7A239 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9D6592BA777B100E7A239 /* SceneDelegate.swift */; };
 		3CA9D65C2BA777B100E7A239 /* ImagesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9D65B2BA777B100E7A239 /* ImagesListViewController.swift */; };
@@ -17,6 +19,7 @@
 		3CA9D6792BA777B400E7A239 /* LentagramUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9D6782BA777B400E7A239 /* LentagramUITests.swift */; };
 		3CA9D67B2BA777B400E7A239 /* LentagramUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9D67A2BA777B400E7A239 /* LentagramUITestsLaunchTests.swift */; };
 		3CA9D6882BA7817D00E7A239 /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9D6872BA7817D00E7A239 /* ImagesListCell.swift */; };
+		3CA9D6C62BBC807800E7A239 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9D6C52BBC807800E7A239 /* ProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +40,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3C565AD52BE1689C001A731D /* SF-Pro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro.ttf"; sourceTree = "<group>"; };
+		3C632E682BBE9285001B2641 /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 		3CA9D6542BA777B100E7A239 /* Lentagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lentagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CA9D6572BA777B100E7A239 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3CA9D6592BA777B100E7A239 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -51,6 +56,7 @@
 		3CA9D6782BA777B400E7A239 /* LentagramUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LentagramUITests.swift; sourceTree = "<group>"; };
 		3CA9D67A2BA777B400E7A239 /* LentagramUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LentagramUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		3CA9D6872BA7817D00E7A239 /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
+		3CA9D6C52BBC807800E7A239 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,9 +109,12 @@
 			children = (
 				3CA9D6892BA781A300E7A239 /* ImagesList */,
 				3CA9D6572BA777B100E7A239 /* AppDelegate.swift */,
+				3CA9D6C52BBC807800E7A239 /* ProfileViewController.swift */,
 				3CA9D6592BA777B100E7A239 /* SceneDelegate.swift */,
 				3CA9D65D2BA777B100E7A239 /* Main.storyboard */,
+				3C632E682BBE9285001B2641 /* SingleImageViewController.swift */,
 				3CA9D6602BA777B300E7A239 /* Assets.xcassets */,
+				3C565AD52BE1689C001A731D /* SF-Pro.ttf */,
 				3CA9D6622BA777B300E7A239 /* LaunchScreen.storyboard */,
 				3CA9D6652BA777B300E7A239 /* Info.plist */,
 			);
@@ -243,6 +252,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3CA9D6612BA777B300E7A239 /* Assets.xcassets in Resources */,
+				3C565AD62BE1689C001A731D /* SF-Pro.ttf in Resources */,
 				3CA9D6642BA777B300E7A239 /* Base in Resources */,
 				3CA9D65F2BA777B100E7A239 /* Base in Resources */,
 			);
@@ -271,7 +281,9 @@
 			files = (
 				3CA9D65C2BA777B100E7A239 /* ImagesListViewController.swift in Sources */,
 				3CA9D6882BA7817D00E7A239 /* ImagesListCell.swift in Sources */,
+				3CA9D6C62BBC807800E7A239 /* ProfileViewController.swift in Sources */,
 				3CA9D6582BA777B100E7A239 /* AppDelegate.swift in Sources */,
+				3C632E692BBE9285001B2641 /* SingleImageViewController.swift in Sources */,
 				3CA9D65A2BA777B100E7A239 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
