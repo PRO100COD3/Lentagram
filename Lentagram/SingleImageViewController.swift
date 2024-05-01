@@ -19,6 +19,10 @@ class SingleImageViewController: UIViewController{
             rescaleAndCenterImageInScrollView(image: image)
         }
     }
+
+    @IBOutlet var allScreenImageView: UIImageView!
+    @IBOutlet var scrollView: UIScrollView!
+    
     override func viewDidLoad() {
         guard let image else {
             return
@@ -30,10 +34,7 @@ class SingleImageViewController: UIViewController{
         scrollView.maximumZoomScale = 1.25
         rescaleAndCenterImageInScrollView(image: image)
     }
-    
-    @IBOutlet var allScreenImageView: UIImageView!
-    @IBOutlet var scrollView: UIScrollView!
-    
+
     @IBAction func didTapBackButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }

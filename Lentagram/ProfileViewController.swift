@@ -7,16 +7,10 @@
 
 import UIKit
 final class ProfileViewController: UIViewController{
-    @IBOutlet var descriptionLabel: UILabel!
-    @IBOutlet var loginNameLabel: UILabel!
-    @IBOutlet var nameLabel: UILabel!
-    @IBOutlet var avatarImage: UIImageView!
-    @IBOutlet var exitButton: UIButton!
-    @IBAction func didTapLogoutButton(_ sender: Any) {
-    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         let avatarImageView = UIImageView(image: UIImage(named: "20"))
         let logoutButton = UIButton.systemButton(with: UIImage(named: "Exit") ?? UIImage(), target: self, action: #selector(Self.didTapButton))
         let nameLabel = UILabel()
@@ -44,12 +38,10 @@ final class ProfileViewController: UIViewController{
         logoutButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
         logoutButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -8).isActive = true
         logoutButton.centerYAnchor.constraint(equalTo: avatarImageView.centerYAnchor).isActive = true
-        //logoutButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8).isActive = true
         logoutButton.tintColor = UIColor(red: 245/255, green: 107/255, blue: 108/255, alpha: 1.0)
         
         nameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16).isActive = true
         nameLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 8).isActive = true
-        //nameLabel.font = nameLabel.font.withSize(23)
         nameLabel.font = UIFont(name: "SFPro-Regular", size: 23.0)
         nameLabel.text = "Екатерина Новикова"
         nameLabel.textColor = .white
@@ -59,13 +51,6 @@ final class ProfileViewController: UIViewController{
         loginNameLabel.text = "@ekaterina_nov"
         loginNameLabel.textColor = .gray
         loginNameLabel.font = UIFont(name: "SFPro-Regular", size: 13.0)
-        //loginNameLabel.font = UIFont(name: "SF Pro", size: 13)
-        for family: String in UIFont.familyNames {
-            print(family)
-            for names: String in UIFont.fontNames(forFamilyName: family) {
-                print("== \(names)")
-            }
-        }
         descriptionLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16).isActive = true
         descriptionLabel.topAnchor.constraint(equalTo: loginNameLabel.bottomAnchor, constant: 8).isActive = true
         descriptionLabel.text = "Hello, world!"
