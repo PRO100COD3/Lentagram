@@ -9,12 +9,12 @@ import UIKit
 final class SplashViewController: UIViewController{
     private let ShowAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
     
-    private let oauth2Service = OAuth2Service()
-    private let oauth2TokenStorage = OAuth2TokenStorage()
+    private let oAuth2Service = OAuth2Service.shared
+    private let oAuth2TokenStorage = OAuth2TokenStorage()
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if (oauth2TokenStorage.token != nil) {
+        if (oAuth2TokenStorage.token != nil) {
             switchToTabBarController()
         } else {
             performSegue(withIdentifier: ShowAuthenticationScreenSegueIdentifier, sender: nil)
@@ -45,11 +45,11 @@ extension SplashViewController {
 extension SplashViewController: AuthViewControllerDelegate {
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
         vc.dismiss(animated: true)
-        oauth2Service.fetchOAuthToken(for: code) { [weak self] result in
+        oAuth2Service.fetchOAuthToken(for: code) { [weak self] result in
             guard let self = self else { return }
             switch result {
                 case .success(let accessToken):
-                    self.oauth2TokenStorage.token = accessToken
+                    self.oAuth2TokenStorage.token = accessToken
                     self.switchToTabBarController()
                 case .failure(let error):
                     print("Error: \(error)")
@@ -59,7 +59,7 @@ extension SplashViewController: AuthViewControllerDelegate {
     }
     
     private func fetchOAuthToken(_ code: String) {
-        oauth2Service.fetchOAuthToken(for: code) { [weak self] result in
+        oAuth2Service.fetchOAuthToken(for: code) { [weak self] result in
             guard let self = self else { return }
             switch result {
                 case .success:

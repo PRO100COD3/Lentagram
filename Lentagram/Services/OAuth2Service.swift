@@ -28,28 +28,26 @@ final class OAuth2Service {
         request.httpMethod = "POST"
         return request
     }
-    func fetchOAuthToken(for code: String, completion: @escaping (Result<String,Error>) -> Void) {
-        guard let requestWithCode = makeOAuthTokenRequest(code: code) else{ return }
-        
-        let task = URLSession.shared.data(for: requestWithCode){ result in
-            switch result {
+    func fetchOAuthToken(for code: String, completion: @escaping (Result<String, Error>) -> Void) {
+        guard let requestWithCode = makeOAuthTokenRequest(code: code) else { return }
+            
+            let task = URLSession.shared.data(for: requestWithCode){ result in
+                switch result {
                 case .success(let data):
                     do {
                         let oAuthToken = try JSONDecoder().decode(OAuthTokenResponseBody.self, from:data)
                         guard let accessToken = oAuthToken.accessToken else {
-                            fatalError("Error: can`t decode token!")
+                            fatalError("Can`t decode token!")
                         }
                         completion(.success(accessToken))
                     } catch {
                         completion(.failure(error))
-                        print("Error: error of requesting: \(error)")
                     }
                 case .failure(let error):
                     completion(.failure(error))
-                    print("Error: error of requesting: \(error)")
+                }
             }
+            
+            task.resume()
         }
-        
-        task.resume()
-    }
 }
