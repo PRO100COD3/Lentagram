@@ -1,47 +1,43 @@
-//
-//  URLSession+data.swift
-//  Lentagram
-//
-//  Created by Вадим Дзюба on 07.05.2024.
-//
-
 import UIKit
-enum NetworkError: Error {  // 1
+enum NetworkError: Error {
     case httpStatusCode(Int)
     case urlRequestError(Error)
     case urlSessionError
+    case decoderError(Error)
 }
 
 extension URLSession {
-    func data(
+    func objectTask<T: Codable>(
         for request: URLRequest,
-        completion: @escaping (Result<Data, Error>) -> Void
+        completion: @escaping (Result<T, Error>) -> Void
     ) -> URLSessionTask {
-        let fulfillCompletionOnTheMainThread: (Result<Data, Error>) -> Void = { result in  // 2
+        let fulfillCompletionOnTheMainThread: (Result<T, Error>) -> Void = { result in
             DispatchQueue.main.async {
                 completion(result)
             }
         }
         
+        let decoder = JSONDecoder()
         let task = dataTask(with: request, completionHandler: { data, response, error in
             if let data = data, let response = response, let statusCode = (response as? HTTPURLResponse)?.statusCode {
                 if 200 ..< 300 ~= statusCode {
-                    fulfillCompletionOnTheMainThread(.success(data)) // 3
-                    print("Все ОК")
+                    do { let decodedData = try decoder.decode(T.self, from: data)
+                        fulfillCompletionOnTheMainThread(.success(decodedData))
+                    } catch {
+                        print("\(String(describing: T.self)) [dataTask:] - Error of decoding: \(error.localizedDescription), Data: \(String(data: data, encoding: .utf8) ?? "")")
+                        fulfillCompletionOnTheMainThread(.failure(NetworkError.decoderError(error)))
+                    }
                 } else {
-                    fulfillCompletionOnTheMainThread(.failure(NetworkError.httpStatusCode(statusCode))) // 4
-                    print("Ошибка \(NetworkError.httpStatusCode(statusCode))")
+                    print("\(String(describing: T.self)) [dataTask:] - Network Error \(statusCode)" )
+                    fulfillCompletionOnTheMainThread(.failure(NetworkError.httpStatusCode(statusCode)))
+                    return
                 }
             } else if let error = error {
-                fulfillCompletionOnTheMainThread(.failure(NetworkError.urlRequestError(error))) // 5
-                print("Ошибка \(NetworkError.urlRequestError(error))")
-            } else {
-                fulfillCompletionOnTheMainThread(.failure(NetworkError.urlSessionError)) // 6
-                print("Ошибка \(NetworkError.urlSessionError)")
+                print("\(String(describing: T.self)) [URLRequest:] - \(error.localizedDescription)")
+                fulfillCompletionOnTheMainThread(.failure(NetworkError.urlRequestError(error)))
+                return
             }
         })
-        
         return task
     }
 }
-

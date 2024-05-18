@@ -1,10 +1,3 @@
-//
-//  Constants.swift
-//  Lentagram
-//
-//  Created by Вадим Дзюба on 02.05.2024.
-//
-
 import Foundation
 enum Constants{
     static let accessKey = "gCxiWQJP9IAyOSLZqX78hrlYuFUxDzs8mlX98TrRb8o"

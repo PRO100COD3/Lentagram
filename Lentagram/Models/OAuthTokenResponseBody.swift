@@ -1,12 +1,7 @@
-//
-//  OAuthTokenResponseBody.swift
-//  Lentagram
-//
-//  Created by Вадим Дзюба on 07.05.2024.
-//
+import Foundation
 
-import UIKit
-struct OAuthTokenResponseBody: Codable{
+struct OAuthTokenResponseBody: Codable {
+    
     private enum CodingKeys: String, CodingKey {
         case accessToken = "access_token"
         case tokenType = "token_type"
