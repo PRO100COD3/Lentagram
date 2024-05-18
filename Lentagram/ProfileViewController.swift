@@ -1,6 +1,6 @@
 import UIKit
-import Kingfisher
 import WebKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
     private let imageView = UIImageView()
@@ -9,6 +9,7 @@ final class ProfileViewController: UIViewController {
     private let nickNameLabel = UILabel()
     private let descriptionLabel = UILabel()
     
+    private let mockProfile = Profile(username: "username", name: "name", loginName: "loginName", bio: "bio")
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
     private let oAuth2TokenStorage = OAuth2TokenStorage()
@@ -41,6 +42,8 @@ final class ProfileViewController: UIViewController {
         oAuth2TokenStorage.resetToken()
         HTTPCookieStorage.shared.cookies?.forEach(HTTPCookieStorage.shared.deleteCookie)
         WKWebsiteDataStore.default().removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: Date(timeIntervalSince1970: 0), completionHandler: {})
+        updateView(data: mockProfile)
+        deleteAvatar()
     }
 }
 
@@ -50,7 +53,9 @@ extension ProfileViewController {
         nickNameLabel.text = data.loginName
         descriptionLabel.text = data.bio
     }
-    
+    func deleteAvatar(){
+        imageView.image = UIImage(named: "No Photo")
+    }
     func updateAvatar() {
         guard let profileImageURL = ProfileImageService.shared.profileImageURL,
               let url = URL(string: profileImageURL)
