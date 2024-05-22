@@ -48,6 +48,7 @@ final class ProfileImageService {
                     print("[ProfileImageService]: \(error)")
                 }
             }
+            self.task = nil
         }
         self.task = task
         task.resume()

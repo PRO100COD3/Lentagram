@@ -12,6 +12,8 @@ final class ProfileViewController: UIViewController {
     private let mockProfile = Profile(username: "username", name: "name", loginName: "loginName", bio: "bio")
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
+    private let imagesListService = ImagesListService.shared
+    private let profileLogoutService = ProfileLogoutService.shared
     private let oAuth2TokenStorage = OAuth2TokenStorage()
     
     private var profileImageServiceObserver: NSObjectProtocol?
@@ -39,15 +41,42 @@ final class ProfileViewController: UIViewController {
     
     @objc
     private func didTapButton() {
-        oAuth2TokenStorage.resetToken()
-        HTTPCookieStorage.shared.cookies?.forEach(HTTPCookieStorage.shared.deleteCookie)
-        WKWebsiteDataStore.default().removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: Date(timeIntervalSince1970: 0), completionHandler: {})
-        updateView(data: mockProfile)
-        deleteAvatar()
+        showAlert()
     }
 }
 
 extension ProfileViewController {
+    func showAlert() {
+            let alert = UIAlertController(
+                title: "До скорых встреч!",
+                message: "Уверены что хотите выйти?",
+                preferredStyle: .alert
+            )
+            
+            let yesAction = UIAlertAction(
+                title: "Да",
+                style: .default) { _ in
+                    alert.dismiss(animated: true)
+                    self.profileLogoutService.logout()
+                    
+                    guard let window = UIApplication.shared.windows.first else {
+                        assertionFailure("confirmExit Invalid Configuration")
+                        return
+                    }
+                    window.rootViewController = SplashViewController()
+                }
+            
+            let noAction = UIAlertAction(
+                title: "Нет",
+                style: .default) { _ in
+                    alert.dismiss(animated: true)
+                }
+            
+            alert.addAction(yesAction)
+            alert.addAction(noAction)
+            
+            present(alert, animated: true)
+        }
     func updateView(data: Profile) {
         nameLabel.text = data.name
         nickNameLabel.text = data.loginName
@@ -79,6 +108,8 @@ extension ProfileViewController {
         view.addSubview(imageView)
         
         imageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16).isActive = true
+        imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = 16
         imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: 70).isActive = true
         imageView.heightAnchor.constraint(equalToConstant: 70).isActive = true

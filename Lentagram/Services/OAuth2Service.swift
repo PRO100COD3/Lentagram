@@ -53,16 +53,17 @@ final class OAuth2Service {
             guard let self = self else {return}
             DispatchQueue.main.async {
                 switch result {
-                case.success(let decodedData):
-                    guard let accessToken = decodedData.accessToken else {
-                        fatalError("[OAuth2Service]: can`t decode token!")
-                    }
-                    self.task = nil
-                    self.lastCode = nil
-                    completion(.success(accessToken))
-                case .failure(let error):
-                    completion(.failure(error))
-                    print("[OAuth2Service]: \(error)")
+                    case.success(let decodedData):
+                        guard let accessToken = decodedData.accessToken else {
+                            assertionFailure("[OAuth2Service]: can`t decode token!")
+                            return
+                        }
+                        self.task = nil
+                        self.lastCode = nil
+                        completion(.success(accessToken))
+                    case .failure(let error):
+                        completion(.failure(error))
+                        print("[OAuth2Service]: \(error)")
                 }
             }
         }
