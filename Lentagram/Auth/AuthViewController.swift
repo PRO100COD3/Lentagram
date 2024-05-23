@@ -16,16 +16,22 @@ final class AuthViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == showWebViewSegueIdentifier {
-            guard
-                let webViewViewController = segue.destination as? WebViewViewController
-            else { assertionFailure("Failed to prepare for \(showWebViewSegueIdentifier)")
-                return }
-            webViewViewController.delegate = self
-        } else {
-            super.prepare(for: segue, sender: sender)
+            if segue.identifier == showWebViewSegueIdentifier {
+                guard
+                    let webViewViewController = segue.destination as? WebViewController
+                else {
+                    assertionFailure("Failed to prepare for \(showWebViewSegueIdentifier)")
+                    return
+                }
+                let authHelper = AuthHelper()
+                let webViewPresenter = WebViewPresenter(authHelper: authHelper)
+                webViewViewController.presenter = webViewPresenter
+                webViewPresenter.view = webViewViewController
+                webViewViewController.delegate = self
+            } else {
+                super.prepare(for: segue, sender: sender)
+            }
         }
-    }
     
     @objc
     private func didTapLogonButton() {
@@ -34,13 +40,13 @@ final class AuthViewController: UIViewController {
 }
 
 extension AuthViewController: WebViewViewControllerDelegate {
-    func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
-        delegate?.authViewController(self, didAuthenticateWithCode: code)
-    }
-    
-    func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
-        dismiss(animated: true)
-    }
+    func webViewViewController(_ vc: WebViewController, didAuthenticateWithCode code: String) {
+            delegate?.authViewController(self, didAuthenticateWithCode: code)
+        }
+        
+        func webViewViewControllerDidCancel(_ vc: WebViewController) {
+            dismiss(animated: true)
+        }
     
     func showAlert(_ vc: UIViewController)  {
         let alert = UIAlertController(
@@ -89,6 +95,7 @@ extension AuthViewController {
         buttonView.layer.cornerRadius = 16
         buttonView.layer.masksToBounds = true
         buttonView.translatesAutoresizingMaskIntoConstraints = false
+        buttonView.accessibilityIdentifier = "Authenticate"
         view.addSubview(buttonView)
         
         NSLayoutConstraint.activate([

@@ -2,12 +2,19 @@ import UIKit
 import WebKit
 import Kingfisher
 
-final class ProfileViewController: UIViewController {
+public protocol ProfileViewControllerProtocol: AnyObject {
+    var presenter: ProfilePresenterProtocol? { get set }
+    func updateView(data: Profile)
+    func setAvatar(url: URL)
+}
+
+final class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     private let imageView = UIImageView()
     private let exitButton = UIButton()
     private let nameLabel = UILabel()
     private let nickNameLabel = UILabel()
     private let descriptionLabel = UILabel()
+    var presenter: ProfilePresenterProtocol?
     
     private let mockProfile = Profile(username: "username", name: "name", loginName: "loginName", bio: "bio")
     private let profileService = ProfileService.shared
@@ -21,6 +28,10 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        presenter = ProfilePresenter(view: self)
+        
+        setupView()
+        
         profileImageServiceObserver = NotificationCenter.default
             .addObserver(
                 forName: ProfileImageService.didChangeNotification,
@@ -28,15 +39,10 @@ final class ProfileViewController: UIViewController {
                 queue: .main
             ) { [weak self] _ in
                 guard let self = self else { return }
-                self.updateAvatar()
+                self.presenter?.updateAvatar()
             }
-        updateAvatar()
-        
-        guard let profileModel = profileService.profileModel else {
-            print("Try to read: profileService.profileModel")
-            return }
-        setupView()
-        updateView(data: profileModel)
+        presenter?.updateAvatar()
+        presenter?.updateProfileDetails()
     }
     
     @objc
@@ -47,49 +53,47 @@ final class ProfileViewController: UIViewController {
 
 extension ProfileViewController {
     func showAlert() {
-            let alert = UIAlertController(
-                title: "До скорых встреч!",
-                message: "Уверены что хотите выйти?",
-                preferredStyle: .alert
-            )
-            
-            let yesAction = UIAlertAction(
-                title: "Да",
-                style: .default) { _ in
-                    alert.dismiss(animated: true)
-                    self.profileLogoutService.logout()
-                    
-                    guard let window = UIApplication.shared.windows.first else {
-                        assertionFailure("confirmExit Invalid Configuration")
-                        return
-                    }
-                    window.rootViewController = SplashViewController()
+        let alert = UIAlertController(
+            title: "До скорых встреч!",
+            message: "Уверены что хотите выйти?",
+            preferredStyle: .alert
+        )
+        
+        let yesAction = UIAlertAction(
+            title: "Да",
+            style: .default) { _ in
+                alert.dismiss(animated: true)
+                self.presenter?.logout()
+                
+                guard let window = UIApplication.shared.windows.first else {
+                    assertionFailure("confirmExit Invalid Configuration")
+                    return
                 }
-            
-            let noAction = UIAlertAction(
-                title: "Нет",
-                style: .default) { _ in
-                    alert.dismiss(animated: true)
-                }
-            
-            alert.addAction(yesAction)
-            alert.addAction(noAction)
-            
-            present(alert, animated: true)
-        }
+                window.rootViewController = SplashViewController()
+            }
+        
+        let noAction = UIAlertAction(
+            title: "Нет",
+            style: .default) { _ in
+                alert.dismiss(animated: true)
+            }
+        
+        alert.addAction(yesAction)
+        alert.addAction(noAction)
+        
+        present(alert, animated: true)
+    }
     func updateView(data: Profile) {
         nameLabel.text = data.name
         nickNameLabel.text = data.loginName
         descriptionLabel.text = data.bio
     }
+    
+    func setAvatar(url: URL) {
+        imageView.kf.setImage(with: url)
+    }
     func deleteAvatar(){
         imageView.image = UIImage(named: "No Photo")
-    }
-    func updateAvatar() {
-        guard let profileImageURL = ProfileImageService.shared.profileImageURL,
-              let url = URL(string: profileImageURL)
-        else { return }
-        imageView.kf.setImage(with: url)
     }
 }
 

@@ -1,7 +1,8 @@
 import Foundation
-struct Profile {
-    let username: String
-    let name: String
-    let loginName: String
-    let bio: String?
+
+public struct Profile {
+    public let username: String
+    public let name: String
+    public let loginName: String
+    public let bio: String?
 }
