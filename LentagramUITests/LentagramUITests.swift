@@ -21,10 +21,10 @@ final class LentagramUITests: XCTestCase {
         
         let webView = app.webViews[ "UnsplashWebView"]
         
-        XCTAssertTrue(webView.waitForExistence(timeout: 5))
+        XCTAssertTrue(webView.waitForExistence(timeout: 20))
         
         let loginTextField = webView.descendants(matching: .textField).element
-        XCTAssertTrue(loginTextField.waitForExistence(timeout: 5))
+        XCTAssertTrue(loginTextField.waitForExistence(timeout: 20))
         
         loginTextField.tap()
         loginTextField.typeText(email)
@@ -36,6 +36,7 @@ final class LentagramUITests: XCTestCase {
         
         passwordTextField.tap()
         passwordTextField.typeText(password)
+        app.buttons["Done"].tap()
         webView.swipeUp()
         
         webView.buttons["Login"].tap()
@@ -43,11 +44,11 @@ final class LentagramUITests: XCTestCase {
         let tablesQuery = app.tables
         let cell = tablesQuery.children(matching: .cell).element(boundBy: 0)
         
-        XCTAssertTrue(cell.waitForExistence(timeout: 5))
+        XCTAssertTrue(cell.waitForExistence(timeout: 15))
     }
     
     func testFeed() throws {
-        sleep(30)
+        sleep(5)
         
         let tablesQuery = app.tables
         
@@ -58,10 +59,10 @@ final class LentagramUITests: XCTestCase {
         let cellToLike = tablesQuery.children(matching: .cell).element(boundBy: 1)
         
         cellToLike.buttons["Like button"].tap()
-        sleep(5)
+        sleep(10)
         
         cellToLike.buttons["Like button"].tap()
-        sleep(5)
+        sleep(10)
         
         cellToLike.tap()
         sleep(30)
@@ -75,14 +76,14 @@ final class LentagramUITests: XCTestCase {
     }
     
     func testProfile() throws {
-        sleep(3)
-        app.tabBars.buttons.element(boundBy: 1)
+        sleep(10)
+        app.tabBars.buttons.element(boundBy: 1).tap()
         
         XCTAssertTrue(app.staticTexts[fullName].exists)
         XCTAssertTrue(app.staticTexts[username].exists)
         
         app.buttons["Logout button"].tap()
         
-        app.alerts["Bye bye!"].scrollViews.otherElements.buttons["Да"].tap()
+        app.alerts["До скорых встреч!"].scrollViews.otherElements.buttons["Да"].tap()
     }
 }

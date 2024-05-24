@@ -123,6 +123,7 @@ extension ProfileViewController {
         let exitButton = UIButton.systemButton(with: UIImage(named: "Exit") ?? UIImage(), target: self, action: #selector(Self.didTapButton))
         exitButton.tintColor = UIColor(red: 245/255, green: 107/255, blue: 108/255, alpha: 1.0)
         exitButton.translatesAutoresizingMaskIntoConstraints = false
+        exitButton.accessibilityIdentifier = "Logout button"
         view.addSubview(exitButton)
         
         exitButton.widthAnchor.constraint(equalToConstant: 44).isActive = true
