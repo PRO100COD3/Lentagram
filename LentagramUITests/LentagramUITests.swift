@@ -19,7 +19,7 @@ final class LentagramUITests: XCTestCase {
         
         app.buttons["Authenticate"].tap()
         
-        let webView = app.webViews[ "UnsplashWebView"]
+        let webView = app.webViews["UnsplashWebView"]
         
         XCTAssertTrue(webView.waitForExistence(timeout: 20))
         
