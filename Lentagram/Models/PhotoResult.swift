@@ -1,5 +1,6 @@
 import Foundation
 
+
 struct PhotoResult: Codable {
     let id: String
     let createdAt: String?

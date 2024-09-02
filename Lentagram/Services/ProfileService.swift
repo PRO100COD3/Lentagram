@@ -1,4 +1,6 @@
 import Foundation
+
+
 final class ProfileService {
     
     private enum GetUserDataError: Error {
@@ -36,11 +38,11 @@ final class ProfileService {
         let task = URLSession.shared.objectTask(for: requestWithToken) { (result: Result<ProfileResult,Error>) in
             DispatchQueue.main.async {
                 switch result {
-                case .success(let decodedData):
-                    completion(.success(decodedData))
-                case .failure(let error):
-                    completion(.failure(error))
-                    print("[ProfileService]: \(error)")
+                    case .success(let decodedData):
+                        completion(.success(decodedData))
+                    case .failure(let error):
+                        completion(.failure(error))
+                        print("[ProfileService]: \(error)")
                 }
             }
             self.task = nil

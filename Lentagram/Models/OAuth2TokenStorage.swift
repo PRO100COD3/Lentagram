@@ -1,5 +1,6 @@
 import SwiftKeychainWrapper
 
+
 protocol OAuth2TokenStorageProtocol {
     var token: String? { get set }
 }

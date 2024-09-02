@@ -1,4 +1,6 @@
 import Foundation
+
+
 struct ProfileResult: Codable {
     private enum CodingKeys: String, CodingKey {
         case username = "username"

@@ -1,5 +1,6 @@
 import Foundation
 
+
 public struct Photo {
     let id: String
     let size: CGSize

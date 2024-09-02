@@ -1,6 +1,7 @@
 import UIKit
 import ProgressHUD
 
+
 final class SplashViewController: UIViewController {
     
     private let oAuth2TokenStorage = OAuth2TokenStorage.shared
@@ -70,13 +71,13 @@ extension SplashViewController: AuthViewControllerDelegate {
             UIBlockingProgressHUD.dismiss()
             guard let self = self else { return }
             switch result {
-            case .success(let accessToken):
-                self.oAuth2TokenStorage.token = accessToken
-                self.didAuthenticate()
-            case .failure(let error):
-                authViewController?.showAlert(vc)
-                print("[SplashViewController]: \(error)")
-                break
+                case .success(let accessToken):
+                    self.oAuth2TokenStorage.token = accessToken
+                    self.didAuthenticate()
+                case .failure(let error):
+                    authViewController?.showAlert(vc)
+                    print("[SplashViewController]: \(error)")
+                    break
             }
         }
     }
@@ -93,14 +94,14 @@ extension SplashViewController: AuthViewControllerDelegate {
         profileService.fetchProfile(token) { [weak self] result in
             guard let self = self else { return }
             switch result {
-            case .success(let profileData):
-                let profile = profileService.prepareProfile(data: profileData)
-                profileService.profileModel = profile
-                guard let token = oAuth2TokenStorage.token else { return }
-                fetchImageProfile(token: token, username: profileData.username)
-            case .failure(let error):
-                print("[SplashViewController]: \(error.localizedDescription)")
-                break
+                case .success(let profileData):
+                    let profile = profileService.prepareProfile(data: profileData)
+                    profileService.profileModel = profile
+                    guard let token = oAuth2TokenStorage.token else { return }
+                    fetchImageProfile(token: token, username: profileData.username)
+                case .failure(let error):
+                    print("[SplashViewController]: \(error.localizedDescription)")
+                    break
             }
         }
     }
@@ -109,11 +110,11 @@ extension SplashViewController: AuthViewControllerDelegate {
         profileImageService.fetchProfileImageURL(token: token, username: username) { [weak self] result in
             guard let self = self else { return }
             switch result {
-            case .success(let imageData):
-                profileImageService.profileImageURL = imageData.profileImage.small
-                switchToTabBarController()
-            case .failure(let error):
-                print(error.localizedDescription)
+                case .success(let imageData):
+                    profileImageService.profileImageURL = imageData.profileImage.small
+                    switchToTabBarController()
+                case .failure(let error):
+                    print(error.localizedDescription)
             }
         }
     }

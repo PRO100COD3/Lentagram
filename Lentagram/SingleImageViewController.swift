@@ -1,5 +1,7 @@
 import UIKit
 import Kingfisher
+
+
 class SingleImageViewController: UIViewController{
     private var imageURL: String?
     
@@ -22,11 +24,11 @@ class SingleImageViewController: UIViewController{
     
     @IBAction func didTapShareButton(_ sender: UIButton) {
         guard let image = allScreenImageView.image else { return }
-                let share = UIActivityViewController(
-                    activityItems: [image],
-                    applicationActivities: nil
-                )
-                present(share, animated: true, completion: nil)
+        let share = UIActivityViewController(
+            activityItems: [image],
+            applicationActivities: nil
+        )
+        present(share, animated: true, completion: nil)
     }
 }
 

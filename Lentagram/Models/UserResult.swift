@@ -1,4 +1,6 @@
 import Foundation
+
+
 struct UserResult: Codable {
     private enum CodingKeys: String, CodingKey {
         case profileImage = "profile_image"

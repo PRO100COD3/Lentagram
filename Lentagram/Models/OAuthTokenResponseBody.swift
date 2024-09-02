@@ -1,5 +1,6 @@
 import Foundation
 
+
 struct OAuthTokenResponseBody: Codable {
     
     private enum CodingKeys: String, CodingKey {

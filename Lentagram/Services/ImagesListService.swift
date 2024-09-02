@@ -1,5 +1,6 @@
 import Foundation
 
+
 public protocol ImagesListServiceProtocol {
     func fetchPhotosNextPage()
     func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<Void, Error>) -> Void)
@@ -9,7 +10,7 @@ final class ImagesListService {
     
     static let shared = ImagesListService()
     static let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
-        
+    
     private let dateFormatterISO8601 = ISO8601DateFormatter()
     private (set) var photos: [Photo] = []
     
@@ -44,32 +45,32 @@ final class ImagesListService {
         
         let task = URLSession.shared.objectTask(for: requestWithPageNumber) { (result: Result<[PhotoResult],Error>) in
             switch result {
-            case .success(let decodedData):
-                var freshArrayOfPhotos: [Photo] = []
-                decodedData.forEach { dataOfPhoto in
-                    let photo = Photo(
-                        id: dataOfPhoto.id,
-                        size: CGSize(width: dataOfPhoto.width, height: dataOfPhoto.height),
-                        createdAt: self.dateFormatterISO8601.date(from: dataOfPhoto.createdAt ?? ""),
-                        welcomeDescription: dataOfPhoto.description,
-                        thumbImageURL: dataOfPhoto.urls.thumb,
-                        largeImageURL: dataOfPhoto.urls.full,
-                        isLiked: dataOfPhoto.likedByUser
-                    )
-                    freshArrayOfPhotos.append(photo)
-                }
-                DispatchQueue.main.async {
-                    self.photos += freshArrayOfPhotos
-                    self.lastLoadedPage = nextPage
+                case .success(let decodedData):
+                    var freshArrayOfPhotos: [Photo] = []
+                    decodedData.forEach { dataOfPhoto in
+                        let photo = Photo(
+                            id: dataOfPhoto.id,
+                            size: CGSize(width: dataOfPhoto.width, height: dataOfPhoto.height),
+                            createdAt: self.dateFormatterISO8601.date(from: dataOfPhoto.createdAt ?? ""),
+                            welcomeDescription: dataOfPhoto.description,
+                            thumbImageURL: dataOfPhoto.urls.thumb,
+                            largeImageURL: dataOfPhoto.urls.full,
+                            isLiked: dataOfPhoto.likedByUser
+                        )
+                        freshArrayOfPhotos.append(photo)
+                    }
+                    DispatchQueue.main.async {
+                        self.photos += freshArrayOfPhotos
+                        self.lastLoadedPage = nextPage
+                        self.task = nil
+                        NotificationCenter.default
+                            .post(name: ImagesListService.didChangeNotification,
+                                  object: self,
+                                  userInfo: ["URL": decodedData])
+                    }
+                case .failure(let error):
+                    print("[ImagesListService]: \(error)")
                     self.task = nil
-                    NotificationCenter.default
-                        .post(name: ImagesListService.didChangeNotification,
-                              object: self,
-                              userInfo: ["URL": decodedData])
-                }
-            case .failure(let error):
-                print("[ImagesListService]: \(error)")
-                self.task = nil
             }
             self.task = nil
         }
@@ -96,27 +97,27 @@ final class ImagesListService {
                 return
             }
             switch result {
-            case .success(_):
-                DispatchQueue.main.async {
-                    if let index = self.photos.firstIndex(where: { $0.id == photoId }) {
-                        let photo = self.photos[index]
-                        let newPhoto = Photo(
-                            id: photo.id,
-                            size: photo.size,
-                            createdAt: photo.createdAt,
-                            welcomeDescription: photo.welcomeDescription,
-                            thumbImageURL: photo.thumbImageURL,
-                            largeImageURL: photo.largeImageURL,
-                            isLiked: !photo.isLiked
-                        )
-                        self.photos[index] = newPhoto
-                        completion(.success(Void()))
+                case .success(_):
+                    DispatchQueue.main.async {
+                        if let index = self.photos.firstIndex(where: { $0.id == photoId }) {
+                            let photo = self.photos[index]
+                            let newPhoto = Photo(
+                                id: photo.id,
+                                size: photo.size,
+                                createdAt: photo.createdAt,
+                                welcomeDescription: photo.welcomeDescription,
+                                thumbImageURL: photo.thumbImageURL,
+                                largeImageURL: photo.largeImageURL,
+                                isLiked: !photo.isLiked
+                            )
+                            self.photos[index] = newPhoto
+                            completion(.success(Void()))
+                        }
                     }
-                }
-            case .failure(let error):
-                completion(.failure(error))
-                print("[ImagesListService]: Error: changeLike error - \(String(describing: error))")
-                self.task = nil
+                case .failure(let error):
+                    completion(.failure(error))
+                    print("[ImagesListService]: Error: changeLike error - \(String(describing: error))")
+                    self.task = nil
             }
             self.task = nil
         }

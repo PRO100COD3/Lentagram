@@ -2,6 +2,7 @@ import UIKit
 import WebKit
 import Kingfisher
 
+
 public protocol ProfileViewControllerProtocol: AnyObject {
     var presenter: ProfilePresenterProtocol? { get set }
     func updateView(data: Profile)

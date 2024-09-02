@@ -1,5 +1,6 @@
 import Foundation
 
+
 public struct Profile {
     public let username: String
     public let name: String

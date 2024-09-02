@@ -1,4 +1,6 @@
 import Foundation
+
+
 final class ProfileImageService {
     private enum GetUserImageDataError: Error {
         case invalidProfileImageRequest
@@ -37,15 +39,15 @@ final class ProfileImageService {
         let task = URLSession.shared.objectTask(for: requestWithTokenAndUsername) { (result: Result<UserResult,Error>) in
             DispatchQueue.main.async {
                 switch result {
-                case .success(let decodedData):
-                    completion(.success(decodedData))
-                    NotificationCenter.default
-                        .post(name: ProfileImageService.didChangeNotification,
-                              object: self,
-                              userInfo: ["URL": decodedData])
-                case .failure(let error):
-                    completion(.failure(error))
-                    print("[ProfileImageService]: \(error)")
+                    case .success(let decodedData):
+                        completion(.success(decodedData))
+                        NotificationCenter.default
+                            .post(name: ProfileImageService.didChangeNotification,
+                                  object: self,
+                                  userInfo: ["URL": decodedData])
+                    case .failure(let error):
+                        completion(.failure(error))
+                        print("[ProfileImageService]: \(error)")
                 }
             }
             self.task = nil
