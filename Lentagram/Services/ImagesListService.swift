@@ -124,7 +124,6 @@ final class ImagesListService {
         task.resume()
     }
     
-    // Запрос статуса лайка фото
     private func likePhotoRequest(photoId: String) -> URLRequest? {
         guard let url = URL(string: mainUrlProfile + "photos/\(photoId)/like"),
               let token = OAuth2TokenStorage().token else {
